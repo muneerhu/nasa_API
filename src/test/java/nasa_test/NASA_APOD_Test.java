@@ -1,6 +1,8 @@
 package nasa_test;
 
+import org.junit.Assert;
 import org.testng.annotations.Test;
+import pojo.NASA_Data;
 import utils.ConfigReader;
 
 import java.time.LocalDate;
@@ -92,4 +94,20 @@ public class NASA_APOD_Test {
                 .statusCode(400)
                 .log().body();
     }
+
+    @Test(description = "Deserialization using pojo class")
+    public void test07(){
+        NASA_Data nasa_data = given()
+                .queryParam("api_key", API_KEY)
+                .get(baseURI)
+                .as(NASA_Data.class);
+
+        Assert.assertEquals(CURRENT_DATE, nasa_data.getDate());
+        System.out.println("Explanation: " + nasa_data.getExplanation());
+        System.out.println("Title: " + nasa_data.getTitle());
+        System.out.println("hdurl: " + nasa_data.getHdurl());
+        System.out.println("Url: " + nasa_data.getUrl());
+
+    }
+
 }
