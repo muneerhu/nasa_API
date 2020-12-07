@@ -61,7 +61,7 @@ public class NASA_APOD_Test {
         given()
                 .when()
                 .queryParam("api_key", API_KEY)
-                .queryParam("dae", CURRENT_DATE)
+                .queryParam("date", CURRENT_DATE)
                 .get(baseURI)
                 .then()
                 .statusCode(200)
@@ -69,4 +69,16 @@ public class NASA_APOD_Test {
                 .log().body();
     }
 
+    @Test(description = "Test and validate with valid date but not current")
+    public void test05(){
+        given()
+                .when()
+                .queryParam("api_key", API_KEY)
+                .queryParam("date", "2020-12-01")
+                .get(baseURI)
+                .then()
+                .statusCode(200)
+                .body("date", equalTo("2020-12-01"))
+                .log().body();
+    }
 }
