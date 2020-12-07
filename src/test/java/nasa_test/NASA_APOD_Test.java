@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.equalTo;
 
 public class NASA_APOD_Test {
     String baseURI = ConfigReader.readProperty("baseURI", "src/test/resources/properties/env.properties");
-
+    String API_KEY = ConfigReader.readProperty("api_key", "src/test/resources/properties/env.properties");
 
     /**
      * Sending a get request without api key and because it is a required query param
@@ -24,4 +24,16 @@ public class NASA_APOD_Test {
                 .body("error.code", equalTo("API_KEY_MISSING"))
                 .log().body();
     }
+
+    @Test(description = "Test with valid API_key")
+    public void test02(){
+        given()
+                .when()
+                .queryParam("api_key",API_KEY)
+                .get(baseURI)
+                .then()
+                .statusCode(200)
+                .log().body();
+    }
+
 }
