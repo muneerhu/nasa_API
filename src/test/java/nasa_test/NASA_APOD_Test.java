@@ -40,10 +40,8 @@ public class NASA_APOD_Test {
     }
 
     /**
-     * for sending any request api key as query param is required but concept_tags, date, hd
-     * are optional
+     * Note: for sending any request api key as query param is required but concept_tags, date, hdare optional
      */
-
     @Test(description = "Test with valid API_key and all other query params")
     public void test03(){
         given()
@@ -56,6 +54,19 @@ public class NASA_APOD_Test {
                 .then()
                 .statusCode(200)
                 .log().body();
-
     }
+
+    @Test(description = "Test and validate the date as query param")
+    public void test04(){
+        given()
+                .when()
+                .queryParam("api_key", API_KEY)
+                .queryParam("dae", CURRENT_DATE)
+                .get(baseURI)
+                .then()
+                .statusCode(200)
+                .body("date", equalTo(CURRENT_DATE))
+                .log().body();
+    }
+
 }
