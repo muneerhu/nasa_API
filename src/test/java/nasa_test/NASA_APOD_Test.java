@@ -81,4 +81,15 @@ public class NASA_APOD_Test {
                 .body("date", equalTo("2020-12-01"))
                 .log().body();
     }
+
+    @Test(description = "Test with invalid date as query param")
+    public void test06(){
+        given()
+                .queryParam("api_key", API_KEY)
+                .queryParam("date", "2021-12-01")
+                .get(baseURI)
+                .then()
+                .statusCode(400)
+                .log().body();
+    }
 }
